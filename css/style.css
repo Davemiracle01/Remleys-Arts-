@@ -54,9 +54,29 @@ body {
     radial-gradient(ellipse 900px 500px at 10% -10%, rgba(209,57,42,0.08), transparent 60%),
     radial-gradient(ellipse 700px 500px at 100% 0%, rgba(217,165,60,0.07), transparent 60%);
   background-attachment: fixed;
+  position: relative;
+}
+
+/* film-grain overlay — gives the whole site a printed/textured feel instead of flat digital */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 a { color: inherit; }
+
+/* ---- SCROLL REVEAL ---- */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
 
 /* ---- NAVBAR ---- */
 .navbar {
@@ -226,17 +246,33 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 420px;
+}
+/* oversized ghost type behind the photo, echoes the fashion-magazine "big word behind image" layout */
+.hero-visual::before {
+  content: "ARTS";
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 9rem);
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-line-strong);
+  z-index: 0;
+  letter-spacing: 0.02em;
+  pointer-events: none;
 }
 .hero-photo {
   position: relative;
-  width: 78%;
-  max-width: 320px;
+  z-index: 1;
+  width: 82%;
+  max-width: 340px;
   background: #0e0f13;
   padding: 14px 14px 44px;
   border-radius: 4px;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-hover);
   transform: rotate(3deg);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
 }
+.hero-photo:hover { transform: rotate(0deg) scale(1.02); }
 .hero-photo img {
   width: 100%;
   display: block;
@@ -428,6 +464,12 @@ a { color: inherit; }
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
 .card-img { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--ink); }
+.card-img::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.55) 100%);
+  pointer-events: none;
+}
 .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
 .card:hover .card-img img { transform: scale(1.06); }
 
@@ -614,7 +656,8 @@ a:focus-visible, button:focus-visible, select:focus-visible {
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
-  .hero-visual { order: -1; }
+  .hero-visual { order: -1; min-height: 320px; }
+  .hero-visual::before { font-size: clamp(3.5rem, 20vw, 6rem); }
   .hero-photo { transform: rotate(0deg); max-width: 260px; }
   .process-strip { grid-template-columns: repeat(2, 1fr); }
   .story { grid-template-columns: 1fr; }
