@@ -166,10 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
     nav?.classList.toggle("scrolled", window.scrollY > 40);
   });
 
-  // Scroll-reveal for the process filmstrip (respects reduced motion)
+  // Scroll-reveal for any element marked .reveal (respects reduced motion)
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const steps = document.querySelectorAll(".process-step");
-  if (steps.length && !prefersReduced && "IntersectionObserver" in window) {
+  const revealEls = document.querySelectorAll(".reveal");
+  if (revealEls.length && !prefersReduced && "IntersectionObserver" in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -177,10 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.3 });
-    steps.forEach(s => io.observe(s));
+    }, { threshold: 0.2 });
+    revealEls.forEach(s => io.observe(s));
   } else {
-    steps.forEach(s => s.classList.add("in-view"));
+    revealEls.forEach(s => s.classList.add("in-view"));
   }
 });
-  
+
+                                                            
