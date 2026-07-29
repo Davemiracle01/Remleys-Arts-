@@ -1,6 +1,7 @@
 /* =====================
    Remleys Arts — style.css
    "Sketchbook to Streetwear" design system
+   Improvements: accessibility, performance, z-index fix for overlay, small refactors
    ===================== */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,14 +38,23 @@
   --shadow-card: 0 10px 30px rgba(0,0,0,0.35);
   --shadow-hover: 0 18px 46px rgba(0,0,0,0.5);
   --nav-h: 76px;
+
+  /* Shared timing / easing */
+  --ease-quick: cubic-bezier(0.16,1,0.3,1);
 }
 
+/* Base / page behaviour */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
 
+/* background + subtle gradients */
 body {
   font-family: var(--font-body);
   background: var(--ink);
@@ -57,22 +67,39 @@ body {
   position: relative;
 }
 
-/* film-grain overlay — gives the whole site a printed/textured feel instead of flat digital */
+/* film-grain overlay — placed behind UI so it never covers chrome (fixed z-index bug) */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: -1; /* moved behind content to avoid covering navbar and other elements */
   pointer-events: none;
   opacity: 0.045;
   mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* data URL truncated in original; keep but ensure it's not visually overpowering */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23000000' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: auto;
 }
 
+/* accessibility helper: visually hide but remain accessible to screen readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+/* links inherit color unless explicitly styled */
 a { color: inherit; }
 
 /* ---- SCROLL REVEAL ---- */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-quick), transform 0.7s var(--ease-quick);
+}
 .reveal.in-view { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
@@ -86,7 +113,7 @@ a { color: inherit; }
   transform: translateX(-50%);
   width: calc(100% - 48px);
   max-width: 1200px;
-  z-index: 100;
+  z-index: 100; /* keep above the grain overlay (overlay is negative) */
   display: flex;
   align-items: center;
   gap: 24px;
@@ -98,6 +125,8 @@ a { color: inherit; }
   border: 1px solid var(--ink-line);
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   transition: box-shadow 0.3s, border-color 0.3s;
+  padding-left: calc(20px + env(safe-area-inset-left));
+  padding-right: calc(20px + env(safe-area-inset-right));
 }
 .navbar.scrolled { border-color: var(--ink-line-strong); box-shadow: 0 8px 32px rgba(0,0,0,0.45); }
 
@@ -201,7 +230,7 @@ a { color: inherit; }
   fill: none;
   stroke-dasharray: 340;
   stroke-dashoffset: 340;
-  animation: draw 0.9s 0.4s cubic-bezier(0.65,0,0.35,1) forwards;
+  animation: draw 0.9s 0.4s var(--ease-quick) forwards;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-text h1 .accent path { animation: none; stroke-dashoffset: 0; }
@@ -270,13 +299,17 @@ a { color: inherit; }
   border-radius: 4px;
   box-shadow: var(--shadow-hover);
   transform: rotate(3deg);
-  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  transition: transform 0.4s var(--ease-quick);
+  will-change: transform;
 }
 .hero-photo:hover { transform: rotate(0deg) scale(1.02); }
 .hero-photo img {
   width: 100%;
   display: block;
   border-radius: 2px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 .hero-photo-cap {
   position: absolute;
@@ -342,7 +375,7 @@ a { color: inherit; }
 .process-step {
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  transition: opacity 0.6s var(--ease-quick), transform 0.6s var(--ease-quick);
 }
 .process-step.in-view { opacity: 1; transform: translateY(0); }
 .process-step:nth-child(2) { transition-delay: 0.08s; }
@@ -451,10 +484,10 @@ a { color: inherit; }
   border: 1px solid var(--ink-line);
   display: flex;
   flex-direction: column;
-  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, border-color 0.35s;
+  transition: transform 0.35s var(--ease-quick), box-shadow 0.35s, border-color 0.35s;
   opacity: 0;
   transform: translateY(16px);
-  animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+  animation: fadeUp 0.5s var(--ease-quick) forwards;
 }
 .card:hover {
   transform: translateY(-6px) rotate(-0.4deg);
@@ -470,7 +503,12 @@ a { color: inherit; }
   background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.55) 100%);
   pointer-events: none;
 }
-.card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+.card-img img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s var(--ease-quick);
+  backface-visibility: hidden;
+  will-change: transform;
+}
 .card:hover .card-img img { transform: scale(1.06); }
 
 .card-img-placeholder {
@@ -651,6 +689,8 @@ a { color: inherit; }
 a:focus-visible, button:focus-visible, select:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 4px rgba(217,165,60,0.08);
 }
 
 /* ---- RESPONSIVE ---- */
@@ -661,6 +701,8 @@ a:focus-visible, button:focus-visible, select:focus-visible {
   .hero-photo { transform: rotate(0deg); max-width: 260px; }
   .process-strip { grid-template-columns: repeat(2, 1fr); }
   .story { grid-template-columns: 1fr; }
+  /* slightly reduce heavy shadows on small screens for performance */
+  .card, .contact-card, .info-card { box-shadow: 0 6px 20px rgba(0,0,0,0.28); }
 }
 @media (max-width: 768px) {
   .nav-links { display: none; }
@@ -679,4 +721,9 @@ a:focus-visible, button:focus-visible, select:focus-visible {
   .filter-tabs { gap: 2px; }
   .tab { padding: 6px 10px; font-size: 0.78rem; }
   .process-strip { grid-template-columns: 1fr 1fr; gap: 12px; }
+}
+
+/* Improved motion handling: remove animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo, .card, .process-step, .reveal { transition: none !important; animation: none !important; transform: none !important; }
 }
