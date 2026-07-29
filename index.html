@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Remleys Arts — premium Tees, Kenya</title>
-  <meta name="description" content="Remleys Arts — hand-painted and custom anime t-shirts, made to order in Kenya. Order on WhatsApp or commission your own design." />
+  <title>Remleys Arts — Premium Custom Anime Tees | Kenya</title>
+  <meta name="description" content="Remleys Arts — Hand-painted and custom anime t-shirts, made to order in Kenya. Order on WhatsApp or commission your own unique streetwear design." />
   <link rel="canonical" href="https://remleys-arts.example/" />
-
+  
   <!-- Social / SEO -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Remleys Arts — premium Tees, Kenya" />
+  <meta property="og:title" content="Remleys Arts — Premium Anime Tees, Kenya" />
   <meta property="og:description" content="Hand-painted and custom anime t-shirts made to order in Kenya. Message us on WhatsApp to order." />
   <meta property="og:image" content="https://remleys-arts.example/images/og-hero.jpg" />
   <meta property="og:url" content="https://remleys-arts.example/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#0f172a" /> <!-- Updated to a sleek dark theme color -->
 
   <!-- Fonts & critical CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,38 +29,103 @@
 
   <!-- Structured data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Store",
-    "name": "Remleys Arts",
-    "description": "Hand-painted and custom anime t-shirts made to order in Kenya.",
-    "url": "https://remleys-arts.example/",
-    "sameAs": ["https://instagram.com/remlys._arts.ke", "https://wa.me/254702538038"]
-  }
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Remleys Arts",
+      "description": "Hand-painted and custom anime t-shirts made to order in Kenya.",
+      "url": "https://remleys-arts.example/",
+      "sameAs": [
+        "https://instagram.com/remlys._arts.ke",
+        "https://wa.me/254702538038"
+      ]
+    }
   </script>
 
+  <!-- NEXT-LEVEL ENHANCEMENTS -->
   <style>
-    /* Minimal critical styles for skip link + focus outlines */
-    .skip-to-content {
-      position: absolute;
-      left: -999px;
-      top: auto;
-      width: 1px;
-      height: 1px;
+    :root {
+      --primary-accent: #ff3366;
+      --primary-gradient: linear-gradient(135deg, #ff3366 0%, #ff9933 100%);
+    }
+    
+    html.scroll-smooth { scroll-behavior: smooth; }
+    
+    /* Accessibility */
+    .skip-to-content {position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;}
+    .skip-to-content:focus {left: 1rem; top: 1rem; width: auto; height: auto; background: #fff; color: #000; padding: .5rem .75rem; z-index: 9999; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,.25);}
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--primary-accent); outline-offset: 3px; }
+
+    /* Glassmorphism Navbar */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    /* Animated Gradient Text */
+    .text-gradient {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShift 5s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Next-Level Hero Image Styling */
+    .hero-photo-wrapper {
+      position: relative;
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      transform: translateY(0);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-    .skip-to-content:focus {
-      left: 1rem;
-      top: 1rem;
-      width: auto;
-      height: auto;
-      background: #fff;
-      padding: .5rem .75rem;
-      z-index: 9999;
-      border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    .hero-photo-wrapper:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.25);
     }
-    a:focus, button:focus { outline: 3px solid #ffd; outline-offset: 3px; }
+    .hero-photo-wrapper img {
+      width: 100%; height: auto; display: block;
+      transition: transform 0.6s ease;
+    }
+    .hero-photo-wrapper:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Floating Tags */
+    .glass-badge {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .badge-bottom-left { bottom: 1rem; left: 1rem; }
+    .badge-top-right { top: 1rem; right: 1rem; background: var(--primary-gradient); border: none; }
+
+    /* Button Upgrades */
+    .btn-whatsapp {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+    }
+    .btn-whatsapp:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+    }
   </style>
 </head>
 <body>
@@ -68,14 +133,13 @@
 
   <!-- NAV -->
   <nav class="navbar" id="navbar" aria-label="Primary navigation">
-    <a href="index.html" class="nav-brand">Remleys<span>Arts</span></a>
+    <a href="index.html" class="nav-brand">Remleys<span class="text-gradient">Arts</span></a>
     <div class="nav-links" role="navigation" aria-label="Main links">
       <a href="index.html" class="active" aria-current="page">Shop</a>
       <a href="contact.html">Contact</a>
     </div>
     <div class="nav-actions">
       <a href="https://instagram.com/remlys._arts.ke" target="_blank" rel="noopener noreferrer" class="nav-social" aria-label="Remleys Arts on Instagram">
-        <!-- accessible Instagram icon -->
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
           <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.2" fill="none"></rect>
           <circle cx="12" cy="12" r="3.25" stroke="currentColor" stroke-width="1.2" fill="none"></circle>
@@ -83,11 +147,9 @@
         </svg>
       </a>
       <a href="https://wa.me/254702538038" target="_blank" rel="noopener noreferrer" class="btn-whatsapp" aria-label="Chat on WhatsApp">
-        <!-- accessible WhatsApp icon -->
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
           <path d="M20.5 3.5A11.9 11.9 0 0 0 12 1C6.1 1 1.4 5.1 1.1 10.8c-.1 1.6.3 3.1 1.2 4.4L1 23l7.1-1.8c1.2.4 2.5.6 3.9.6 5.9 0 10.5-4.2 10.9-9.8.2-1.9 0-3.7-1.4-5.1zM12 20c-1.2 0-2.4-.2-3.5-.6l-.3-.1-4.1 1.1 1.1-3.7-.2-.4A7.7 7.7 0 0 1 4 10.9 7.9 7.9 0 0 1 12 4a7.9 7.9 0 0 1 8 6.9c0 4.4-3.6 8-8 8z"></path>
-        </svg>
-        WhatsApp
+        </svg> WhatsApp
       </a>
     </div>
   </nav>
@@ -96,15 +158,12 @@
   <header class="hero" role="banner" aria-labelledby="heroHeading">
     <div class="hero-text">
       <span class="hero-eyebrow">Hand-painted in Kenya</span>
-      <h1 id="heroHeading">Street style<br/>meets <span class="accent">anime
-        <svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2 12 C 50 20, 150 2, 198 10" stroke="currentColor" stroke-width="1.2" fill="none" /></svg>
-      </span> culture.</h1>
+      <h1 id="heroHeading">Street style<br/>meets <span class="accent text-gradient">anime</span> culture.</h1>
       <p>Every tee starts as a sketch and ends up on someone's back. Hand-painted originals, vinyl-cut custom pieces, and printed anime designs — made to order and shipped from Kenya.</p>
-
+      
       <div class="hero-ctas">
         <a href="https://wa.me/254702538038?text=Hello%2C%20I%27d%20like%20to%20order%20a%20tee%20from%20Remleys%20Arts." target="_blank" rel="noopener noreferrer" class="btn-whatsapp large" aria-label="Order on WhatsApp">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.5 14.2c-.3-.15-1.8-.87-2.07-.97-.28-.1-.48-.15-.68.15-.2.29-.77.98-.95 1.18-.18.21-.36.23-.66.08-1.8-.9-3-2.5-3.6-4.2-.13-.34.13-.5.28-.66.09-.09.2-.21.3-.31.07-.06.09-.11.14-.18.05-.06.02-.12 0-.18-.02-.06-.48-1.17-.66-1.6-.17-.41-.35-.35-.5-.36-.12 0-.26 0-.4 0-.14 0-.36.05-.55.28-.38.44-1.17 1.18-1.17 2.86 0 1.68 1.2 3.3 1.37 3.53.17.22 2.36 3.6 5.72 4.92 3.36 1.3 3.36.87 3.96.82.6-.06 1.92-.78 2.2-1.53.28-.74.28-1.38.2-1.52-.08-.14-.28-.22-.57-.37z"></path></svg>
-          Order on WhatsApp
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.5 14.2c-.3-.15-1.8-.87-2.07-.97-.28-.1-.48-.15-.68.15-.2.29-.77.98-.95 1.18-.18.21-.36.23-.66.08-1.8-.9-3-2.5-3.6-4.2-.13-.34.13-.5.28-.66.09-.09.2-.21.3-.31.07-.06.09-.11.14-.18.05-.06.02-.12 0-.18-.02-.06-.48-1.17-.66-1.6-.17-.41-.35-.35-.5-.36-.12 0-.26 0-.4 0-.14 0-.36.05-.55.28-.38.44-1.17 1.18-1.17 2.86 0 1.68 1.2 3.3 1.37 3.53.17.22 2.36 3.6 5.72 4.92 3.36 1.3 3.36.87 3.96.82.6-.06 1.92-.78 2.2-1.53.28-.74.28-1.38.2-1.52-.08-.14-.28-.22-.57-.37z"></path></svg> Order on WhatsApp
         </a>
         <a href="#shop" class="btn-outline">Browse Designs</a>
       </div>
@@ -116,14 +175,13 @@
       </div>
     </div>
 
+    <!-- NEXT-LEVEL HERO VISUAL (Image Swapped Here) -->
     <div class="hero-visual" aria-hidden="true">
-      <div class="hero-photo">
-        <picture>
-          <source srcset="images/products/shirt-gotochurch-1200.jpg 1200w, images/products/shirt-gotochurch-800.jpg 800w, images/products/shirt-gotochurch-480.jpg 480w" sizes="(min-width:900px) 50vw, 100vw" />
-          <img src="images/products/shirt-gotochurch.jpg" alt="Hand-painted 'Go To Church' tee, freshly finished" loading="lazy" decoding="async" width="1200" height="800" />
-        </picture>
-        <span class="hero-photo-cap">fresh off the brush</span>
-        <span class="hero-tag">one of one</span>
+      <div class="hero-photo-wrapper">
+        <!-- Changed to the inspo image. Removed srcset to prevent broken sizes since it's a process image -->
+        <img src="images/process/01-inspo.jpg" alt="Pinned reference image for anime streetwear inspiration" loading="eager" decoding="sync" width="1200" height="800" />
+        <span class="glass-badge badge-bottom-left">The Blueprint</span>
+        <span class="glass-badge badge-top-right">Where it starts</span>
       </div>
     </div>
   </header>
@@ -143,7 +201,6 @@
         <h3>The inspo</h3>
         <p>We start from your reference — a screenshot, a panel, an idea.</p>
       </div>
-
       <div class="process-step reveal">
         <div class="process-frame">
           <span class="process-num">2</span>
@@ -152,7 +209,6 @@
         <h3>The sketch</h3>
         <p>Pencil first, straight onto the fabric — no shortcuts.</p>
       </div>
-
       <div class="process-step reveal">
         <div class="process-frame">
           <span class="process-num">3</span>
@@ -161,7 +217,6 @@
         <h3>Paint or vinyl</h3>
         <p>Hand-painted with fabric paint, or precision-cut vinyl — whichever the design calls for.</p>
       </div>
-
       <div class="process-step reveal">
         <div class="process-frame">
           <span class="process-num">4</span>
@@ -182,7 +237,6 @@
         <button class="tab" data-cat="printed" role="tab">Printed Anime</button>
         <button class="tab" data-cat="commission" role="tab">Commission</button>
       </div>
-
       <div class="filter-controls">
         <label for="sortSelect" class="sr-only">Sort products</label>
         <select id="sortSelect" class="filter-select" aria-label="Sort products">
@@ -191,7 +245,6 @@
           <option value="price-desc">Price: High → Low</option>
           <option value="name">Name A–Z</option>
         </select>
-
         <label for="designSelect" class="sr-only">Filter designs</label>
         <select id="designSelect" class="filter-select" aria-label="Filter by design">
           <option value="all">All Designs</option>
@@ -211,7 +264,7 @@
   <!-- STORY -->
   <section class="story reveal" aria-labelledby="storyHeading">
     <h2 id="storyHeading" class="sr-only">Our story</h2>
-    <p class="story-quote">Hand-painted<br/>with a <span class="accent">brush.</span><br/>Cut with a <span class="accent">blade.</span><br/>Worn like <span class="accent">armor.</span></p>
+    <p class="story-quote">Hand-painted<br/>with a <span class="accent text-gradient">brush.</span><br/>Cut with a <span class="accent text-gradient">blade.</span><br/>Worn like <span class="accent text-gradient">armor.</span></p>
     <div class="story-body">
       <p>Remleys Arts makes wearable art — anime fandom pieces built by hand, one tee at a time. Some designs are freehand painted with fabric paint. Others are precision-cut vinyl. The printed anime pieces are produced in short runs using professional screen and digital printing processes for consistent quality.</p>
       <p>Based in Kenya, every order is made on request — nothing sits pre-made on a shelf. Message us on WhatsApp with the design you want, or send your own art and we'll turn it into a tee.</p>
@@ -226,36 +279,29 @@
         <p>Hand-painted &amp; custom anime tees<br/>Kenya</p>
         <a href="https://instagram.com/remlys._arts.ke" target="_blank" rel="noopener noreferrer" class="footer-social">@remlys._arts.ke on Instagram</a>
       </div>
-
       <div class="footer-cta">
         <p>Ready to order?</p>
         <a href="https://wa.me/254702538038" target="_blank" rel="noopener noreferrer" class="btn-whatsapp large" aria-label="Chat on WhatsApp">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.5 14.2c-.3-.15-1.8-.87-2.07-.97-.28-.1-.48-.15-.68.15-.2.29-.77.98-.95 1.18-.18.21-.36.23-.66.08-1.8-.9-3-2.5-3.6-4.2-.13-.34.13-.5.28-.66.09-.09.2-.21.3-.31.07-.06.09-.11.14-.18.05-.06.02-.12 0-.18-.02-.06-.48-1.17-.66-1.6-.17-.41-.35-.35-.5-.36-.12 0-.26 0-.4 0-.14 0-.36.05-.55.28-.38.44-1.17 1.18-1.17 2.86 0 1.68 1.2 3.3 1.37 3.53.17.22 2.36 3.6 5.72 4.92 3.36 1.3 3.36.87 3.96.82.6-.06 1.92-.78 2.2-1.53.28-.74.28-1.38.2-1.52-.08-.14-.28-.22-.57-.37z"></path></svg>
-          Chat on WhatsApp
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.5 14.2c-.3-.15-1.8-.87-2.07-.97-.28-.1-.48-.15-.68.15-.2.29-.77.98-.95 1.18-.18.21-.36.23-.66.08-1.8-.9-3-2.5-3.6-4.2-.13-.34.13-.5.28-.66.09-.09.2-.21.3-.31.07-.06.09-.11.14-.18.05-.06.02-.12 0-.18-.02-.06-.48-1.17-.66-1.6-.17-.41-.35-.35-.5-.36-.12 0-.26 0-.4 0-.14 0-.36.05-.55.28-.38.44-1.17 1.18-1.17 2.86 0 1.68 1.2 3.3 1.37 3.53.17.22 2.36 3.6 5.72 4.92 3.36 1.3 3.36.87 3.96.82.6-.06 1.92-.78 2.2-1.53.28-.74.28-1.38.2-1.52-.08-.14-.28-.22-.57-.37z"></path></svg> Chat on WhatsApp
         </a>
       </div>
-
       <div>
         <p class="footer-copy">© 2026 Remleys Arts. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- App scripts: defer and module usage for improved loading -->
+  <!-- App scripts -->
   <script>
-    // Small primer script: update design count if products.js exposes the array
     (function() {
       function setCount(n) {
         var el = document.getElementById('totalCount');
         if (!el) return;
         el.textContent = (typeof n === 'number' && n > 0) ? n : '—';
       }
-
-      // If products.js defines window.PRODUCTS (array), use it
       if (window.PRODUCTS && Array.isArray(window.PRODUCTS)) {
         setCount(window.PRODUCTS.length);
       } else {
-        // wait until product script loads and dispatches custom event
         window.addEventListener('products:loaded', function(e) {
           var count = (e && e.detail && e.detail.count) || (window.PRODUCTS && window.PRODUCTS.length) || '—';
           setCount(count);
@@ -263,14 +309,11 @@
       }
     })();
   </script>
-
   <script src="js/products.js" defer></script>
   <script type="module" src="js/app.js" defer></script>
-
+  
   <noscript>
-    <style>
-      .grid { opacity: 1; }
-    </style>
+    <style>.grid { opacity: 1; }</style>
     <div class="noscript-warning">For the best experience enable JavaScript.</div>
   </noscript>
 </body>
