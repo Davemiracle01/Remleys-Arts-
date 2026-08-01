@@ -120,14 +120,17 @@ a { color: inherit; }
   100% { background-position: 0% 50%; }
 }
 
+/*
+  Scroll-linked reveal (scroll-symbolic-page skill technique).
+  --reveal is a 0–1 custom property set every frame by the inline script in
+  index.html, based purely on scroll position. No .in-view class, no
+  IntersectionObserver one-shot trigger, no transition long enough to look
+  like it's animating on its own timer — motion tracks the scrollbar 1:1.
+*/
 .reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s var(--ease-quick), transform 0.7s var(--ease-quick);
-}
-.reveal.in-view {
-  opacity: 1;
-  transform: translateY(0);
+  --reveal: 0;
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 28px));
 }
 
 /* ---- NAVBAR (Glassmorphism Upgrade) ---- */
@@ -297,11 +300,10 @@ a { color: inherit; }
   overflow: hidden;
   box-shadow: 0 25px 60px rgba(0,0,0,0.4);
   transform: rotate(2deg) translateY(0);
-  transition: transform 0.5s var(--ease-quick), box-shadow 0.5s var(--ease-quick);
+  transition: box-shadow 0.5s var(--ease-quick);
   border: 1px solid rgba(255,255,255,0.1);
 }
 .hero-photo-wrapper:hover {
-  transform: rotate(0deg) translateY(-10px) scale(1.02);
   box-shadow: var(--shadow-glow);
 }
 .hero-photo-wrapper img {
@@ -352,14 +354,9 @@ a { color: inherit; }
 .process-strip {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
 }
-.process-step {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-quick), transform 0.6s var(--ease-quick);
-}
-.process-step.in-view { opacity: 1; transform: translateY(0); }
-.process-step:nth-child(2) { transition-delay: 0.1s; }
-.process-step:nth-child(3) { transition-delay: 0.2s; }
-.process-step:nth-child(4) { transition-delay: 0.3s; }
+/* Staggering now comes naturally from each step's own scroll position
+   (later steps sit lower on the page, so their --reveal ratio lags behind
+   earlier ones) — no transition-delay needed. */
 
 .process-frame {
   position: relative; aspect-ratio: 3/4;
@@ -573,4 +570,5 @@ a:focus-visible, button:focus-visible, select:focus-visible {
   .tab { padding: 6px 12px; font-size: 0.8rem; }
   .process-strip { grid-template-columns: 1fr 1fr; gap: 16px; }
   .story-quote { font-size: 1.8rem; }
-}
+                   }
+     
