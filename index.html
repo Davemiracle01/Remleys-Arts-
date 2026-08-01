@@ -14,7 +14,7 @@
   <meta property="og:image" content="https://remleys-arts.example/images/og-hero.jpg" />
   <meta property="og:url" content="https://remleys-arts.example/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#0f172a" /> <!-- Updated to a sleek dark theme color -->
+  <meta name="theme-color" content="#0f172a" />
 
   <!-- Fonts & critical CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -175,10 +175,8 @@
       </div>
     </div>
 
-    <!-- NEXT-LEVEL HERO VISUAL (Image Swapped Here) -->
     <div class="hero-visual" aria-hidden="true">
-      <div class="hero-photo-wrapper">
-        <!-- Changed to the inspo image. Removed srcset to prevent broken sizes since it's a process image -->
+      <div class="hero-photo-wrapper" id="heroPhoto">
         <img src="images/process/01-inspo.jpg" alt="Pinned reference image for anime streetwear inspiration" loading="eager" decoding="sync" width="1200" height="800" />
         <span class="glass-badge badge-bottom-left">The Blueprint</span>
         <span class="glass-badge badge-top-right">Where it starts</span>
@@ -311,10 +309,69 @@
   </script>
   <script src="js/products.js" defer></script>
   <script type="module" src="js/app.js" defer></script>
+
+  <!--
+    Scroll-linked motion (scroll-symbolic-page skill technique).
+    Replaces the old one-shot "fade in once, then freeze" reveal with motion
+    that is a direct function of scroll position: it advances, reverses, and
+    stops exactly where scrolling stops. No timers, no animation that plays
+    on its own once triggered. Doesn't touch the shop grid, filters, or
+    js/app.js / js/products.js (not part of this file) — those keep working
+    exactly as before.
+  -->
+  <script>
+    (function () {
+      var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal, .process-step'));
+      if (!revealEls.length) return;
+
+      function ratioFor(el) {
+        var rect = el.getBoundingClientRect();
+        var vh = window.innerHeight;
+        // 0 when the element's top is still below the viewport,
+        // 1 once it has scrolled up to roughly a third from the top.
+        var start = vh * 0.92;
+        var end = vh * 0.35;
+        var raw = (start - rect.top) / (start - end);
+        return Math.max(0, Math.min(1, raw));
+      }
+
+      var ticking = false;
+      function update() {
+        revealEls.forEach(function (el) {
+          el.style.setProperty('--reveal', ratioFor(el));
+        });
+        ticking = false;
+      }
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      update(); // correct resting state on load, before any scroll happens
+
+      // Subtle scroll-linked parallax on the hero photo (optional flourish,
+      // same principle: tied to position, not time).
+      var heroPhoto = document.getElementById('heroPhoto');
+      if (heroPhoto) {
+        function updateHero() {
+          var rect = heroPhoto.getBoundingClientRect();
+          var shift = Math.max(-24, Math.min(24, rect.top * 0.04));
+          heroPhoto.style.transform = 'translateY(' + shift + 'px) rotate(2deg)';
+        }
+        window.addEventListener('scroll', updateHero, { passive: true });
+        window.addEventListener('resize', updateHero, { passive: true });
+        updateHero();
+      }
+    })();
+  </script>
   
   <noscript>
     <style>.grid { opacity: 1; }</style>
     <div class="noscript-warning">For the best experience enable JavaScript.</div>
   </noscript>
 </body>
-</html>
+          </html>
+          
